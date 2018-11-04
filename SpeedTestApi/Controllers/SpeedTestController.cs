@@ -31,6 +31,9 @@ namespace SpeedTestApi.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> UploadSpeedTest([FromBody] TestResult speedTest)
         {
+            /* Truncate distance */
+            speedTest.Data.Server.Distance = ((double)((int)(speedTest.Data.Server.Distance * 1000.0))) / 1000.0;
+
             await _eventHub.PublishSpeedTest(speedTest);
 
             var speedTestData = $"Got a TestResult from { speedTest.User } with download { speedTest.Data.Speeds.Download } Mbps.";
