@@ -8,9 +8,9 @@ using Google.Protobuf;
 
 namespace SpeedTestApi.Services
 {
-    public class SpeedTestEvents : ISpeedTestEvents, IDisposable
+    public class SpeedTestEvents : ISpeedTestEvents
     {
-        private PublisherClient _publisher { get; set; }
+        private readonly PublisherClient _publisher;
 
         public Task Initialization { get; private set; }
 
@@ -26,11 +26,6 @@ namespace SpeedTestApi.Services
         {
             var message = JsonConvert.SerializeObject(speedTest);
             await _publisher.PublishAsync(message);
-        }
-
-        public void Dispose()
-        {
-            /* Nothing to do */
         }
     }
 }
