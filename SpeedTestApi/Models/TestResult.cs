@@ -1,101 +1,120 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace SpeedTestApi.Models
 {
     public class TestResult
     {
         [Required]
-        public Guid SessionId { get; set; }
-
+        [JsonProperty("user")]
         [StringLength(500, MinimumLength = 2)]
-        [Required]
         public string User { get; set; }
 
-        [Range(1, int.MaxValue)]
         [Required]
+        [JsonProperty("device")]
+        [Range(1, int.MaxValue)]
         public int Device { get; set; }
 
-        [Range(0, long.MaxValue)]
         [Required]
+        [JsonProperty("timestamp")]
+        [Range(0, long.MaxValue)]
         public long Timestamp { get; set; }
 
         [Required]
+        [JsonProperty("data")]
         public TestData Data { get; set; }
     }
 
     public class TestData
     {
         [Required]
+        [JsonProperty("speeds")]
         public TestSpeeds Speeds { get; set; }
 
         [Required]
+        [JsonProperty("client")]
         public TestClient Client { get; set; }
 
         [Required]
+        [JsonProperty("server")]
         public TestServer Server { get; set; }
     }
 
     public class TestSpeeds
     {
-        [Range(0, 3000)]
         [Required]
+        [JsonProperty("download")]
+        [Range(0, 3000)]
         public double Download { get; set; }
 
-        [Range(0, 3000)]
         [Required]
+        [JsonProperty("upload")]
+        [Range(0, 3000)]
         public double Upload { get; set; }
     }
 
     public class TestClient
     {
-        [RegularExpression(@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")]
         [Required]
+        [JsonProperty("ip")]
+        [RegularExpression(@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")]
         public string Ip { get; set; }
 
+        [JsonProperty("lat")]
         [Range(-90, 90)]
         public double Latitude { get; set; }
 
+        [JsonProperty("lon")]
         [Range(-180, 180)]
         public double Longitude { get; set; }
 
-        [StringLength(500, MinimumLength = 2)]
         [Required]
+        [JsonProperty("isp")]
+        [StringLength(500, MinimumLength = 2)]
         public string Isp { get; set; }
 
-        [RegularExpression(@"^([A-Z]){2}$")]
         [Required]
+        [JsonProperty("country")]
+        [RegularExpression(@"^([A-Z]){2}$")]
         public string Country { get; set; }
     }
 
     public class TestServer
     {
-        [StringLength(500, MinimumLength = 2)]
         [Required]
+        [JsonProperty("host")]
+        [StringLength(500, MinimumLength = 2)]
         public string Host { get; set; }
 
-        [Range(-90, 90)]
         [Required]
+        [JsonProperty("lat")]
+        [Range(-90, 90)]
         public double Latitude { get; set; }
 
-        [Range(-180, 180)]
         [Required]
+        [JsonProperty("lon")]
+        [Range(-180, 180)]
         public double Longitude { get; set; }
 
-        [RegularExpression(@"^([A-Z]){2}$")]
         [Required]
+        [JsonProperty("country")]
+        [RegularExpression(@"^([A-Z]){2}$")]
         public string Country { get; set; }
 
-        [Range(0, 21000000)]
         [Required]
+        [JsonProperty("distance")]
+        [Range(0, 21000000)]
         public double Distance { get; set; }
 
-        [Range(0, int.MaxValue)]
         [Required]
+        [JsonProperty("ping")]
+        [Range(0, int.MaxValue)]
         public int Ping { get; set; }
 
-        [Range(0, int.MaxValue)]
         [Required]
+        [JsonProperty("id")]
+        [Range(0, int.MaxValue)]
         public int Id { get; set; }
     }
 }
